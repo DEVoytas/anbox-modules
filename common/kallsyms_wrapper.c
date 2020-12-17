@@ -1,23 +1,20 @@
 /* SPDX-License-Identifier: (GPL-2.0-only OR LGPL-2.1-only)
  *
- * wrapper/kallsyms.c
+ * common/kallsyms_wrapper.c
  *
  * Wrapper around kallsyms. Using kprobes to get its address when available.
- *
- * Can we mainline LTTng already so we don't have to waste our time doing this
- * kind of hack ?
  *
  * Copyright (C) 2020 Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
  */
 
 #include <linux/kprobes.h>
 #include <linux/module.h>
-#include <wrapper/kallsyms.h>
+#include "../include/kallsyms_wrapper.h"
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,7,0))
 
 #ifndef CONFIG_KPROBES
-# error "LTTng-modules requires CONFIG_KPROBES on kernels >= 5.7.0"
+# error "anbox-modules requires CONFIG_KPROBES on kernels >= 5.7.0"
 #endif
 
 static
@@ -61,7 +58,7 @@ unsigned long wrapper_kallsyms_lookup_name(const char *name)
 	if (kallsyms_lookup_name_sym)
 		return kallsyms_lookup_name_sym(name);
 	else {
-		printk_once(KERN_WARNING "LTTng requires kallsyms_lookup_name\n");
+		printk_once(KERN_WARNING "Anbox requires kallsyms_lookup_name\n");
 		return 0;
 	}
 }

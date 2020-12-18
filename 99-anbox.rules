@@ -1,2 +1,3 @@
+KERNEL=="anbox_common", NAME="%k", MODE="0666"
 KERNEL=="ashmem", NAME="%k", MODE="0666"
 KERNEL=="binder*", NAME="%k", MODE="0666"

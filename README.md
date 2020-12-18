@@ -18,6 +18,7 @@ Package name for linux-headers varies on different distributions, e.g.
 
 
 You can either run `./INSTALL.sh` script to automate the installation steps or follow them manually below:
+(NOTE: Steps containing `common` are only required for kernel versions 5.7 or newer)
 
 * First install the configuration files:
 
@@ -29,6 +30,7 @@ You can either run `./INSTALL.sh` script to automate the installation steps or f
 * Then copy the module sources to `/usr/src/`:
 
   ```
+  $ sudo cp -rT common /usr/src/anbox-common-1 # required only for kernels >= 5.7
   $ sudo cp -rT ashmem /usr/src/anbox-ashmem-1
   $ sudo cp -rT binder /usr/src/anbox-binder-1
   ```
@@ -36,6 +38,7 @@ You can either run `./INSTALL.sh` script to automate the installation steps or f
 * Finally use `dkms` to build and install:
 
   ```
+  $ sudo dkms install anbox-common/1 # if kernel >= 5.7
   $ sudo dkms install anbox-ashmem/1
   $ sudo dkms install anbox-binder/1
   ```
@@ -43,6 +46,7 @@ You can either run `./INSTALL.sh` script to automate the installation steps or f
 You can verify by loading these modules and checking the created devices:
 
 ```
+$ sudo modprobe anbox_common_linux # if kernel >= 5.7
 $ sudo modprobe ashmem_linux
 $ sudo modprobe binder_linux
 $ lsmod | grep -e ashmem_linux -e binder_linux
